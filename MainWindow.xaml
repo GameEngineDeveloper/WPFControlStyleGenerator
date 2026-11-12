@@ -1,0 +1,180 @@
+﻿<Window x:Class="ButtonStyleGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Button Style Generator"
+        Height="600" Width="1000">
+    <TabControl>
+        <TabItem Header="Button Style Generator">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10" VerticalAlignment="Top">
+                        <TextBlock Text="Normal State" FontWeight="Bold" Margin="0,5,0,5" />
+                        <TextBlock Text="Background Gradient" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="NormalBackgroundStartBox" Text="#FF2196F3" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="NormalBackgroundStartBox" Click="ColorPicker_Click" />
+                            <TextBox Name="NormalBackgroundEndBox" Text="#FF1976D2" Grid.Column="2" Margin="5,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="3" Tag="NormalBackgroundEndBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <TextBlock Text="Foreground" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="NormalForegroundBox" Text="White" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="NormalForegroundBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <Separator Margin="5" />
+                        <TextBlock Text="MouseOver State" FontWeight="Bold" Margin="0,5,0,5" />
+                        <TextBlock Text="Background Gradient" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="HoverBackgroundStartBox" Text="#FF42A5F5" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="HoverBackgroundStartBox" Click="ColorPicker_Click" />
+                            <TextBox Name="HoverBackgroundEndBox" Text="#FF1E88E5" Grid.Column="2" Margin="5,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="3" Tag="HoverBackgroundEndBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <TextBlock Text="Foreground" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="HoverForegroundBox" Text="White" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="HoverForegroundBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <Separator Margin="5" />
+                        <TextBlock Text="Pressed State" FontWeight="Bold" Margin="0,5,0,5" />
+                        <TextBlock Text="Background Gradient" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="PressedBackgroundStartBox" Text="#FF1976D2" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="PressedBackgroundStartBox" Click="ColorPicker_Click" />
+                            <TextBox Name="PressedBackgroundEndBox" Text="#FF0D47A1" Grid.Column="2" Margin="5,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="3" Tag="PressedBackgroundEndBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <TextBlock Text="Foreground" />
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="PressedForegroundBox" Text="White" Grid.Column="0" Margin="0,0,5,0" />
+                            <Button Content="🎨" Width="30" Grid.Column="1" Tag="PressedForegroundBox" Click="ColorPicker_Click" />
+                        </Grid>
+                        <Separator Margin="5" />
+                        <TextBlock Text="Transition Duration (seconds)" FontWeight="Bold" Margin="0,5,0,0" />
+                        <Slider Name="TransitionDurationSlider" Minimum="0" Maximum="2" Value="0" TickFrequency="0.1" IsSnapToTickEnabled="True" />
+                        <TextBlock Text="{Binding Value, ElementName=TransitionDurationSlider, StringFormat='{}{0:F1} seconds'}" />
+                        <Button Content="Generate XAML" Margin="10" Height="30" Click="GenerateXaml_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="border" CornerRadius="4" BorderThickness="0">
+                                                    <Border.Resources>
+                                                        <LinearGradientBrush x:Key="bgBrush" StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#FF2196F3" Offset="0.0"/>
+                                                            <GradientStop Color="#FF1976D2" Offset="1.0"/>
+                                                        </LinearGradientBrush>
+                                                        <SolidColorBrush x:Key="fgBrush" Color="#FFFFFFFF"/>
+                                                    </Border.Resources>
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal">
+                                                                <Storyboard>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#FF2196F3" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#FF1976D2" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="#FFFFFFFF" Duration="0:0:0.10"/>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="MouseOver">
+                                                                <Storyboard>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#FF42A5F5" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#FF1E88E5" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="#FFFFFFFF" Duration="0:0:0.10"/>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Pressed">
+                                                                <Storyboard>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#FF1976D2" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#FF0D47A1" Duration="0:0:0.10"/>
+                                                                    <ColorAnimation Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" To="#FFFFFFFF" Duration="0:0:0.10"/>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <Border.Background>
+                                                        <StaticResource ResourceKey="bgBrush"/>
+                                                    </Border.Background>
+                                                    <ContentPresenter x:Name="contentPresenter"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Content="{TemplateBinding Content}"
+              ContentTemplate="{TemplateBinding ContentTemplate}"
+              RecognizesAccessKey="True"
+              TextElement.Foreground="{StaticResource fgBrush}"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+                <DockPanel Grid.Column="1" Margin="10">
+                    <TextBlock Text="Generated XAML:" FontWeight="Bold" Margin="0,0,0,5" Height="14" DockPanel.Dock="Top"/>
+                    <TextBox Name="XamlOutputBox" FontFamily="Consolas" FontSize="12" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True" />
+                </DockPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="CheckBox Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="ComboBox Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="ListBox Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="RadioButton Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="Menu Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="Slider Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="ProgressBar Style Generator">
+            <Grid></Grid>
+        </TabItem>
+        <TabItem Header="Expander Style Generator">
+            <Grid></Grid>
+        </TabItem>
+    </TabControl>
+</Window>
